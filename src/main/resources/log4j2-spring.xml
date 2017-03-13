@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60" status="OFF" verbose="true">
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout pattern="[%p] [%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] %c:%L - %m%n"/>
+        </Console>
+        <RollingFile name="FILEOUT"
+                     fileName="@log4j2.logfile.home@/app/daily.log"
+                     filePattern="@log4j2.logfile.home@/app/daily.%d{yyyy_MM_dd}.log">
+            <PatternLayout pattern="[%p] [%d{yyyy-MM-dd HH:mm:ss,SSS}] [%t] %c:%L - %m%n"/>
+            <Policies>
+                <!--每天保存一份日志-->
+                <TimeBasedTriggeringPolicy modulate="true" interval="1" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <!--只保留30天内的日志-->
+                <Delete basePath="@log4j2.logfile.home@/logs/app" maxDepth="1">
+                    <IfFileName glob="daily.*.log" />
+                    <IfLastModified age="30d" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="info">
+            <AppenderRef  ref="STDOUT"/>
+            <AppenderRef ref="FILEOUT" />
+        </Root>
+    </Loggers>
+</Configuration>
