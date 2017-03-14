@@ -1,6 +1,6 @@
 package org.combo.cfg;
 
-import org.beetl.core.resource.WebAppResourceLoader;
+import org.beetl.core.resource.ClasspathResourceLoader;
 import org.beetl.ext.spring.BeetlGroupUtilConfiguration;
 import org.beetl.ext.spring.BeetlSpringViewResolver;
 import org.beetl.sql.core.ClasspathLoader;
@@ -35,8 +35,9 @@ public class BeetlCfg {
 
         try {
             String root =  patternResolver.getResource("classpath:templates").getFile().toString();
-            WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(root);
-            beetlGroupUtilConfiguration.setResourceLoader(webAppResourceLoader);
+            ClasspathResourceLoader classpathResourceLoader = new ClasspathResourceLoader(root);
+//            WebAppResourceLoader webAppResourceLoader = new WebAppResourceLoader(root);
+            beetlGroupUtilConfiguration.setResourceLoader(classpathResourceLoader);
 
             beetlGroupUtilConfiguration.setConfigFileResource(patternResolver.getResource("classpath:beetl.properties"));
             return beetlGroupUtilConfiguration;
@@ -66,11 +67,11 @@ public class BeetlCfg {
 
     @Bean(name = "sqlManagerFactoryBean")
     @Primary
-    public SqlManagerFactoryBean getSqlManagerFactoryBean(DataSource datasource) {
+    public SqlManagerFactoryBean getSqlManagerFactoryBean(DataSource dataSource) {
         SqlManagerFactoryBean factory = new SqlManagerFactoryBean();
 
         BeetlSqlDataSource source = new BeetlSqlDataSource();
-        source.setMasterSource(datasource);;
+        source.setMasterSource(dataSource);
         factory.setCs(source);
         factory.setDbStyle(new MySqlStyle());
         factory.setInterceptors(new Interceptor[]{new DebugInterceptor()});
