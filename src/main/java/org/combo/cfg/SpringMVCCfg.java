@@ -21,7 +21,7 @@ public class SpringMVCCfg{
         jacksonMsgConverter.setObjectMapper(JsonUtils.getObjectMapper());
         List<MediaType> mediaTypes = new ArrayList<>();
         mediaTypes.add(MediaType.valueOf("text/html;charset=UTF-8"));
-        mediaTypes.add(MediaType.valueOf("text/plain;charset=UTF-8"));
+        mediaTypes.add(MediaType.valueOf("application/json;charset=UTF-8"));
         jacksonMsgConverter.setSupportedMediaTypes(mediaTypes);
         HttpMessageConverters httpMessageConverters = new HttpMessageConverters(jacksonMsgConverter);
         return httpMessageConverters;
