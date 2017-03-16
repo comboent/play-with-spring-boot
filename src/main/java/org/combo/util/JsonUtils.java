@@ -23,9 +23,9 @@ import java.util.Map;
 
 public class JsonUtils {
     private static final Logger logger = LoggerFactory.getLogger(JsonUtils.class);
-    private static final ObjectMapper mapper = initObjectMapper();
+    private static final ObjectMapper mapper = getObjectMapper();
 
-    private static ObjectMapper initObjectMapper() {
+    public static ObjectMapper getObjectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
